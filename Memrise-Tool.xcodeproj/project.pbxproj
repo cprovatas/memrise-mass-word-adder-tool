@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E057E0D1DB4358700693970 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E057E0C1DB4358700693970 /* AppDelegate.swift */; };
-		3E057E0F1DB4358700693970 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E057E0E1DB4358700693970 /* ViewController.swift */; };
+		3E057E0F1DB4358700693970 /* CPMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E057E0E1DB4358700693970 /* CPMainViewController.swift */; };
 		3E057E111DB4358700693970 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E057E101DB4358700693970 /* Assets.xcassets */; };
 		3E057E141DB4358700693970 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E057E121DB4358700693970 /* Main.storyboard */; };
 		3E057E1F1DB4358700693970 /* Memrise_ToolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E057E1E1DB4358700693970 /* Memrise_ToolTests.swift */; };
 		3E057E2A1DB4358700693970 /* Memrise_ToolUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E057E291DB4358700693970 /* Memrise_ToolUITests.swift */; };
 		3E057E381DB4372700693970 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E057E371DB4372700693970 /* WebView.swift */; };
+		3E2643881F20284C00E94EB6 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2643871F20284C00E94EB6 /* Globals.swift */; };
+		3E26438A1F202A6D00E94EB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2643891F202A2500E94EB6 /* AppDelegate.swift */; };
 		3EB5C62D1DBBC1FA005AF6D0 /* StringInterpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB5C62C1DBBC1FA005AF6D0 /* StringInterpolation.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,8 +37,7 @@
 
 /* Begin PBXFileReference section */
 		3E057E091DB4358700693970 /* Memrise-Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Memrise-Tool.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E057E0C1DB4358700693970 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3E057E0E1DB4358700693970 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3E057E0E1DB4358700693970 /* CPMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPMainViewController.swift; sourceTree = "<group>"; };
 		3E057E101DB4358700693970 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E057E131DB4358700693970 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E057E151DB4358700693970 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -48,6 +48,8 @@
 		3E057E291DB4358700693970 /* Memrise_ToolUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memrise_ToolUITests.swift; sourceTree = "<group>"; };
 		3E057E2B1DB4358700693970 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E057E371DB4372700693970 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		3E2643871F20284C00E94EB6 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		3E2643891F202A2500E94EB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3EB5C62C1DBBC1FA005AF6D0 /* StringInterpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringInterpolation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,10 +101,11 @@
 		3E057E0B1DB4358700693970 /* Memrise-Tool */ = {
 			isa = PBXGroup;
 			children = (
-				3E057E0C1DB4358700693970 /* AppDelegate.swift */,
-				3E057E0E1DB4358700693970 /* ViewController.swift */,
+				3E2643891F202A2500E94EB6 /* AppDelegate.swift */,
+				3E057E0E1DB4358700693970 /* CPMainViewController.swift */,
 				3E057E371DB4372700693970 /* WebView.swift */,
 				3EB5C62C1DBBC1FA005AF6D0 /* StringInterpolation.swift */,
+				3E2643871F20284C00E94EB6 /* Globals.swift */,
 				3E057E101DB4358700693970 /* Assets.xcassets */,
 				3E057E121DB4358700693970 /* Main.storyboard */,
 				3E057E151DB4358700693970 /* Info.plist */,
@@ -191,20 +194,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Charlton Provatas";
 				TargetAttributes = {
 					3E057E081DB4358700693970 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					3E057E191DB4358700693970 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 3E057E081DB4358700693970;
 					};
 					3E057E241DB4358700693970 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 3E057E081DB4358700693970;
 					};
@@ -262,8 +268,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E057E381DB4372700693970 /* WebView.swift in Sources */,
-				3E057E0F1DB4358700693970 /* ViewController.swift in Sources */,
-				3E057E0D1DB4358700693970 /* AppDelegate.swift in Sources */,
+				3E057E0F1DB4358700693970 /* CPMainViewController.swift in Sources */,
+				3E2643881F20284C00E94EB6 /* Globals.swift in Sources */,
+				3E26438A1F202A6D00E94EB6 /* AppDelegate.swift in Sources */,
 				3EB5C62D1DBBC1FA005AF6D0 /* StringInterpolation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,7 +327,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -328,7 +337,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -369,7 +383,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -377,7 +393,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -410,7 +431,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cprovatas.Memrise-Tool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -423,7 +445,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cprovatas.Memrise-Tool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -437,7 +460,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cprovatas.Memrise-ToolTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Memrise-Tool.app/Contents/MacOS/Memrise-Tool";
 			};
 			name = Debug;
@@ -452,7 +476,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cprovatas.Memrise-ToolTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Memrise-Tool.app/Contents/MacOS/Memrise-Tool";
 			};
 			name = Release;
@@ -466,7 +491,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cprovatas.Memrise-ToolUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = "Memrise-Tool";
 			};
 			name = Debug;
@@ -480,7 +506,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cprovatas.Memrise-ToolUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = "Memrise-Tool";
 			};
 			name = Release;

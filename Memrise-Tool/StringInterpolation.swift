@@ -10,13 +10,13 @@ import Foundation
 
 class StringInterpolation {
     
-    class func inspect(string: String) -> String {
-        
+    public class func inspect(string: String) -> String {
+                        
         if !string.contains("http://") && !string.contains("https://") && !string.contains("www.") && !string.contains(".") {
-            return "https://www.google.com/search?q=" + string.encode()
+            return "https://www.google.com/search?q=" + string.encoded!
         }
         
-        var candidate = URL(string: "https://" + string)
+        let candidate = URL(string: "https://" + string)
         
         if candidate?.scheme == nil || candidate?.host == nil {
             return "http://" + string
@@ -28,32 +28,8 @@ class StringInterpolation {
         return string
     }
     
-    class func removeHTML( string: String) -> String {
-        
-        var string = string
-        let fragments = [ "<span>", "</span>", "<br>", "</br>", "<span title=\"", "\">" ]
-        
-        for fragment in fragments {
-            string = string.replacingOccurrences(of: fragment, with: "")
-        }
-        return string
+    public class func removeHTML(_ string: String) -> String {
+        return ["<span>", "</span>", "<br>", "</br>", "<span title=\"", "\">"].map({ string.replacingOccurrences(of: $0, with: "") }).joined()
     }
 }
 
-
-//extension String {
-//    
-//    subscript (i: Int) -> Character {
-//        return self[self.startIndex.advancedBy(i)]
-//    }
-//    
-//    subscript (i: Int) -> String {
-//        return String(self[i] as Character)
-//    }
-//    
-//    subscript (r: Range<Int>) -> String {
-//        let start = startIndex.advancedBy(r.startIndex)
-//        let end = start.advancedBy(r.endIndex - r.startIndex)
-//        return self[Range(start ..< end)]
-//    }
-//}

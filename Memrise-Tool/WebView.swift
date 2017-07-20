@@ -10,18 +10,17 @@ import Foundation
 import WebKit
 import AppKit
 
-class WebBrowser : WKWebView {
+final class CPWebView : WKWebView {
             
     override func viewDidMoveToWindow() {
         allowsBackForwardNavigationGestures = true
-        customUserAgent = "Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_3 like Mac OS X; ja-jp) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"
+      //  customUserAgent = "Mozilla/5.0 (iPod; U; CPU iPhone OS 4_3_3 like Mac OS X; ja-jp) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"
         loadRequestWith(urlString: "http://www.gazeta-shqip.com/lajme/")        
     }
     
     public func loadRequestWith(urlString: String) {
-        if urlString == "" { return }
+        guard let url = URL(string: urlString) else { return }
         
-        load(URLRequest(url: URL(string: urlString)!))
-        
+        load(URLRequest(url: url))        
     }
 }

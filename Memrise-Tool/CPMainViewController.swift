@@ -9,55 +9,57 @@
 import Cocoa
 import WebKit
 
-let languages = [ "en", "af", "sq", "am", "ar", "hy", "az", "eu", "be", "bn", "bs", "bg", "ca", "ceb", "ny", "zh-CN", "co", "hr", "cs", "da", "nl", "eo", "et", "tl", "fi", "fr", "fy", "gl", "ka", "de", "el", "gu", "ht", "ha", "haw", "iw", "hi", "hmn", "hu", "is", "ig", "id", "ga", "it", "ja", "jw", "kn", "kk", "km", "ko", "ku", "ky", "lo", "la", "lv", "lt", "lb", "mk", "mg", "ms", "ml", "mt", "mi", "mr", "mn", "my", "ne", "no", "ps", "fa", "pl", "pt", "pa", "ro", "ru", "sm", "gd", "sr", "st", "sn", "sd", "si", "sk", "sl", "so", "es", "su", "sw", "sv", "tg", "ta", "te", "th", "tr", "uk", "ur", "uz", "vi", "cy", "xh", "yi", "yo", "zu" ]
-
-
-
-class ViewController: NSViewController {
+final class CPMainViewController: NSViewController {
     
-    var webBrowser: WebBrowser!
-    var translator: WKWebView!
-    var urlTextBar: HandleEnterClass!
-    var loadUrlButton: NSButton!
-    var translateButton: NSButton!
+    private var webBrowser: CPWebView!
+    private var translator: WKWebView!
+    fileprivate var urlTextBar: CPTextField!
+    private var selectedString: String!
+    @IBOutlet private var translateToSlider: NSPopUpButton!
+    @IBOutlet private var translateFromSlider: NSPopUpButton!
+    @IBOutlet private var resultsBox: NSTextView!
     
-    @IBOutlet var translateToSlider: NSPopUpButton!
-    @IBOutlet var translateFromSlider: NSPopUpButton!
-    @IBOutlet var resultsBox: NSTextView!
+    private var loadUrlButton: NSButton! = {
+        let l = NSButton()
+        l.layer?.borderColor = NSColor.black.cgColor
+        l.layer?.borderWidth = 2
+        l.title  = "->"
+        l.action = NSSelectorFromString("loadUrl")
+        return l
+    }()
+    
+    private var translateButton: NSButton! = {
+        let t = NSButton()
+        t.keyEquivalentModifierMask = NSEvent.ModifierFlags.command
+        t.keyEquivalent = "t"
+        t.layer?.borderColor = NSColor.black.cgColor
+        t.layer?.borderWidth = 2
+        t.title  = "Translate (⌘T)"
+        t.action = NSSelectorFromString("translate")
+        return t
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUp()
+    }
+    
+    private func setUp() {
         
-        webBrowser = WebBrowser()
+        webBrowser = CPWebView()
         webBrowser.navigationDelegate = self
         webBrowser.frame = NSRect(x: 0, y: 0, width: view.frame.size.width / 2, height: view.frame.size.height - 22)
         view.addSubview(webBrowser)
         
-        urlTextBar = HandleEnterClass()
+        urlTextBar = CPTextField()
         urlTextBar.parent = self
         urlTextBar.frame = NSRect(x: 0, y: view.frame.size.height - 20, width: webBrowser.frame.size.width - 25, height: 20)
         view.addSubview(urlTextBar)
         
-        loadUrlButton = NSButton()
         loadUrlButton.frame = NSRect(x: urlTextBar.frame.size.width, y: view.frame.size.height - 20, width: 25, height: 20)
-        loadUrlButton.layer?.borderColor = NSColor.black.cgColor
-        loadUrlButton.layer?.borderWidth = 2
-        loadUrlButton.title  = "->"
-        loadUrlButton.action = #selector(loadUrl)
-        
-        
-        translateButton = NSButton()
-        translateButton.keyEquivalentModifierMask = .command
-        translateButton.keyEquivalent = "t"
         translateButton.frame = NSRect(x: view.frame.size.width - 100, y: 0, width: 100, height: 25)
-        translateButton.layer?.borderColor = NSColor.black.cgColor
-        translateButton.layer?.borderWidth = 2
-        translateButton.title  = "Translate (⌘T)"
-        translateButton.action = #selector(translate)
         view.addSubview(translateButton)
-        
         view.addSubview(loadUrlButton)
-        
     }
     
     private func setWeb() {
@@ -68,7 +70,7 @@ class ViewController: NSViewController {
         view.addSubview(translator)
     }
     
-    public func loadUrl() {
+    @objc public func loadUrl() {
         webBrowser.loadRequestWith(urlString: StringInterpolation.inspect(string: urlTextBar.stringValue))
     }
     
@@ -80,24 +82,32 @@ class ViewController: NSViewController {
         }
     }
     
-    var selectedString: String!
     public func translate() {
         webBrowser.evaluateJavaScript("window.getSelection().toString()") { (data, error) in
             
-            if self.translateToSlider.indexOfSelectedItem == self.translateFromSlider.indexOfSelectedItem {
+            guard self.translateToSlider.indexOfSelectedItem != self.translateFromSlider.indexOfSelectedItem else {
                 self.alert(with: "Languages Are The Same", buttonTitle: "OK", description: "Please select two different languages to translate")
                 return
             }
-            if data == nil || data as! String == "" {
+            
+            guard let html = data as? String, !html.isEmpty else {
                 self.alert(with: "No Text Selected", buttonTitle: "OK", description: "Highlight text from the web view on the left before clicking Translate.")
                 return
             }
             
-            let webString =  "https://translate.google.com/#" + languages[self.translateFromSlider.indexOfSelectedItem] + "/" + languages[self.translateToSlider.indexOfSelectedItem] + "/" + (data as! String).encode()
-            print(webString)
+            guard let encodedHTML = html.encoded else {
+                Swift.print("\(self.self) Error Function: '\(#function)' Line \(#line).  Invalid HTML")
+                return
+            }
+            
+            let languages = CPGlobals.defaultLanguages
+            
+            let webString = "https://translate.google.com/#" + languages[self.translateFromSlider.indexOfSelectedItem] + "/" + languages[self.translateToSlider.indexOfSelectedItem] + "/" + encodedHTML
+            
+            //print(webString)
             
             self.setWeb()
-            self.selectedString = (data as! String)
+            self.selectedString = html
             self.translator.load(URLRequest(url: URL(string: webString)!))
         }
     }
@@ -112,70 +122,73 @@ class ViewController: NSViewController {
     
     public func getGoogleTranslateContents() {
         translator.evaluateJavaScript("document.getElementById(\"result_box\").innerHTML") { (data, error) in
-            if data != nil && data is String {
-                self.setResultText(string: data as! String)
+            guard let data = data as? String else {
+                Swift.print("\(self.self) Error Function: '\(#function)' Line \(#line).  Failed to get result")
+                return
             }
-            print(error)
+            self.setResultText(string: data)
         }
     }
     
     private func setResultText(string: String) {
-        resultsBox.string?.append(selectedString + ", " + StringInterpolation.removeHTML(string: string) + "\n")
+        resultsBox.string.append(selectedString + ", " + StringInterpolation.removeHTML(string) + "\n")
     }
-
 }
 
-
-extension ViewController : WKNavigationDelegate {
+extension CPMainViewController : WKNavigationDelegate {
+    
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        Swift.print("\(self.self) Error Function: '\(#function)' Line \(#line).  \(error.localizedDescription)")
         print(error)
     }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
-        if webView.className == "Memrise_Tool.WebBrowser" {
-            urlTextBar.stringValue = (webView.url?.absoluteString)!
+        if let urlString = (webView as? CPWebView)?.url?.absoluteString {
+            urlTextBar.stringValue = urlString
         }else {
             getGoogleTranslateContents()
         }
     }
+    
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        print(error)
+        Swift.print("\(self.self) Error Function: '\(#function)' Line \(#line).  \(error.localizedDescription)")
     }
+    
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        if webView.className == "Memrise_Tool.WebBrowser" {
-            urlTextBar.stringValue = (webView.url?.absoluteString)!
+        if let urlString = (webView as? CPWebView)?.url?.absoluteString {
+            urlTextBar.stringValue = urlString
         }
     }
 }
 
-class HandleEnterClass : NSTextField {
+class CPTextField : NSTextField {
     
-    var parent : ViewController!
-    
+    fileprivate weak var parent : CPMainViewController!
     override func keyUp(with event: NSEvent) {
         
         if event.keyCode == 76 || event.keyCode == 36 {
             parent.loadUrl()
-            NSLog("loading from text view")
         }
     }
 }
 
-class ResultBox : NSTextView {
+class CPTextView : NSTextView {
     
-    override func mouseDown(with event: NSEvent) {        
-        if (string?.characters.count)! > 0 {
-            NSPasteboard.general().clearContents()
-            NSPasteboard.general().setString(string!, forType: NSStringPboardType)
-            NSLog("copied to clipboard")
+    override func mouseDown(with event: NSEvent) {
+        
+        if !string.isEmpty {
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(string, forType: .string)
         }
+        
         super.mouseDown(with: event)
     }
     
 }
 
-extension String {
-    public func encode() -> String {
-        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+public extension String {
+    public var encoded : String? {
+        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
 }
